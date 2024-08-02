@@ -151,6 +151,7 @@ async function createNativeServer(
   serverId: string,
   serverName: string,
   outputChannel: LogOutputChannel,
+  traceOutputChannel: LogOutputChannel,
   initializationOptions: IInitializationOptions,
   ruffExecutable?: RuffExecutable,
 ): Promise<LanguageClient> {
@@ -189,8 +190,8 @@ async function createNativeServer(
   const clientOptions = {
     // Register the server for python documents
     documentSelector: getDocumentSelector(),
-    outputChannel: outputChannel,
-    traceOutputChannel: outputChannel,
+    outputChannel,
+    traceOutputChannel,
     revealOutputChannelOn: RevealOutputChannelOn.Never,
     initializationOptions,
   };
@@ -371,6 +372,7 @@ async function createServer(
   serverId: string,
   serverName: string,
   outputChannel: LogOutputChannel,
+  traceOutputChannel: LogOutputChannel,
   initializationOptions: IInitializationOptions,
 ): Promise<LanguageClient> {
   const { useNativeServer, executable } = await resolveNativeServerSetting(
@@ -387,6 +389,7 @@ async function createServer(
       serverId,
       serverName,
       outputChannel,
+      traceOutputChannel,
       initializationOptions,
       executable,
     );
@@ -403,6 +406,7 @@ export async function startServer(
   serverId: string,
   serverName: string,
   outputChannel: LogOutputChannel,
+  traceOutputChannel: LogOutputChannel,
 ): Promise<LanguageClient | undefined> {
   updateStatus(undefined, LanguageStatusSeverity.Information, true);
 
@@ -415,6 +419,7 @@ export async function startServer(
     serverId,
     serverName,
     outputChannel,
+    traceOutputChannel,
     {
       settings: extensionSettings,
       globalSettings: globalSettings,

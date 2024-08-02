@@ -40,6 +40,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
   // Setup logging
   const outputChannel = createOutputChannel(serverName);
+  const traceOutputChannel = createOutputChannel(`${serverName} Trace`);
   context.subscriptions.push(outputChannel, registerLogger(outputChannel));
 
   // Log Server information
@@ -134,6 +135,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         serverId,
         serverName,
         outputChannel,
+        traceOutputChannel,
       );
     } finally {
       // Ensure that we reset the flag in case of an error, early return, or success.
@@ -159,6 +161,9 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     }),
     registerCommand(`${serverId}.showLogs`, async () => {
       outputChannel.show();
+    }),
+    registerCommand(`${serverId}.serverTrace`, async () => {
+      traceOutputChannel.show();
     }),
     registerCommand(`${serverId}.restart`, async () => {
       await runServer();

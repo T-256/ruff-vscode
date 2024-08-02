@@ -39,34 +39,39 @@ export function registerLogger(logChannel: LogOutputChannel): Disposable {
 export function traceLog(...args: Arguments): void {
   if (process.env.CI === "true") {
     console.log(...args);
+  } else {
+    channel?.traceLog(...args);
   }
-  channel?.traceLog(...args);
 }
 
 export function traceError(...args: Arguments): void {
   if (process.env.CI === "true") {
     console.log(...args);
+  } else {
+    channel?.traceError(...args);
   }
-  channel?.traceError(...args);
 }
 
 export function traceWarn(...args: Arguments): void {
   if (process.env.CI === "true") {
     console.log(...args);
+  } else {
+    channel?.traceWarn(...args);
   }
-  channel?.traceWarn(...args);
 }
 
 export function traceInfo(...args: Arguments): void {
   if (process.env.CI === "true") {
     console.log(...args);
+  } else {
+    channel?.traceInfo(...args);
   }
-  channel?.traceInfo(...args);
 }
 
 export function traceVerbose(...args: Arguments): void {
   if (process.env.CI === "true") {
     console.log(...args);
+  } else {
+    channel?.traceVerbose(...args);
   }
-  channel?.traceVerbose(...args);
 }

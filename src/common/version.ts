@@ -37,26 +37,13 @@ function versionGte(a: VersionInfo, b: VersionInfo): boolean {
 /**
  * The minimum version of the Ruff executable that supports the native server.
  */
-export const MINIMUM_SUPPORTED_EXECUTABLE_VERSION: VersionInfo = { major: 0, minor: 1, patch: 0 };
+export const MINIMUM_SUPPORTED_EXECUTABLE_VERSION: VersionInfo = { major: 0, minor: 3, patch: 5 };
 
 /**
  * Check if the given version of the Ruff executable supports the native server.
  */
 export function supportsExecutable(version: VersionInfo): boolean {
   return versionGte(version, MINIMUM_SUPPORTED_EXECUTABLE_VERSION);
-}
-
-/**
- * The minimum version of the Ruff executable that supports the native server.
- * TODO: remove this when dropped `ruff-lsp` and bumped `MINIMUM_SUPPORTED_EXECUTABLE_VERSION` to 0.3.5
- */
-export const MINIMUM_NATIVE_SERVER_VERSION: VersionInfo = { major: 0, minor: 3, patch: 5 };
-
-/**
- * Check if the given version of the Ruff executable supports the native server.
- */
-export function supportsNativeServer(version: VersionInfo): boolean {
-  return versionGte(version, MINIMUM_NATIVE_SERVER_VERSION);
 }
 
 /**

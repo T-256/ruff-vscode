@@ -28,12 +28,10 @@ import {
   ISettings,
 } from "./settings";
 import {
-  supportsNativeServer,
   versionToString,
   VersionInfo,
   MINIMUM_SUPPORTED_EXECUTABLE_VERSION,
   supportsExecutable,
-  MINIMUM_NATIVE_SERVER_VERSION,
   supportsStableNativeServer,
   NATIVE_SERVER_STABLE_VERSION,
 } from "./version";
@@ -196,17 +194,6 @@ async function createNativeServer(
   const { path: ruffBinaryPath, version: ruffVersion } = ruffExecutable;
 
   traceInfo(`Found Ruff ${versionToString(ruffVersion)} at ${ruffBinaryPath}`);
-
-  if (!ruffBinaryPath.endsWith("red_knot")) {
-    if (!supportsNativeServer(ruffVersion)) {
-      const message = `Native server requires Ruff ${versionToString(
-        MINIMUM_NATIVE_SERVER_VERSION,
-      )}, but found ${versionToString(ruffVersion)} at ${ruffBinaryPath} instead`;
-      traceError(message);
-      vscode.window.showErrorMessage(message);
-      return Promise.reject();
-    }
-  }
 
   let ruffServerArgs: string[];
   if (ruffBinaryPath.endsWith("red_knot")) {
@@ -429,6 +416,10 @@ async function createServer(
       executable,
     );
   } else {
+    const message =
+      "Using the legacy server (ruff-lsp) has been deprecated; Please consider removing `nativeServer` from your settings since it is on by default.";
+    vscode.window.showWarningMessage(message);
+    traceWarn(message);
     return createLegacyServer(settings, serverId, serverName, outputChannel, initializationOptions);
   }
 }

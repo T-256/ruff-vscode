@@ -140,7 +140,7 @@ export async function getWorkspaceSettings(
   }
 
   return {
-    nativeServer: config.get<NativeServer>("nativeServer") ?? "auto",
+    nativeServer: config.get<NativeServer>("nativeServer") ?? "on",
     cwd: workspace.uri.fsPath,
     workspace: workspace.uri.toString(),
     path: resolveVariables(config.get<string[]>("path") ?? [], workspace),
@@ -192,7 +192,7 @@ function getOptionalGlobalValue<T>(config: WorkspaceConfiguration, key: string):
 export async function getGlobalSettings(namespace: string): Promise<ISettings> {
   const config = getConfiguration(namespace);
   return {
-    nativeServer: getGlobalValue<NativeServer>(config, "nativeServer", "auto"),
+    nativeServer: getGlobalValue<NativeServer>(config, "nativeServer", "on"),
     cwd: process.cwd(),
     workspace: process.cwd(),
     path: getGlobalValue<string[]>(config, "path", []),
